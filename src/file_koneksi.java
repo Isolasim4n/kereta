@@ -20,7 +20,7 @@ public class file_koneksi {
 { 
         if (koneksi == null) { 
             Driver driver = new Driver(); 
-            koneksi = (Connection)DriverManager.getConnection("jdbc:mysql://localhost:3306/db_testkoneksi?zeroDateTimeBehavior=convertToNull", "root", ""); 
+            koneksi = (Connection)DriverManager.getConnection("jdbc:mysql://localhost:3306/db_kereta?zeroDateTimeBehavior=convertToNull", "root", ""); 
         } 
         return koneksi; 
     } 

@@ -1,4 +1,9 @@
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
 
@@ -32,45 +37,25 @@ public class Login extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         text_id = new javax.swing.JTextField();
-        btn_login = new javax.swing.JButton();
-        btn_daftar = new javax.swing.JButton();
         btn_exit = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        text_nama = new javax.swing.JTextField();
+        btn_login = new javax.swing.JButton();
+        pass = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Tekton Pro Ext", 1, 24)); // NOI18N
-        jLabel1.setText("ID");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 40, -1, -1));
+        jLabel1.setText("Username");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 40, -1, -1));
 
         text_id.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 text_idActionPerformed(evt);
             }
         });
-        getContentPane().add(text_id, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 50, 190, 40));
-
-        btn_login.setFont(new java.awt.Font("Sylfaen", 1, 18)); // NOI18N
-        btn_login.setText("LOGIN");
-        btn_login.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_loginActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btn_login, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 170, 121, 50));
-
-        btn_daftar.setFont(new java.awt.Font("Sylfaen", 1, 18)); // NOI18N
-        btn_daftar.setText("SIGN UP");
-        btn_daftar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_daftarActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btn_daftar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, 121, 50));
+        getContentPane().add(text_id, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 60, 190, 40));
 
         btn_exit.setFont(new java.awt.Font("Sylfaen", 1, 18)); // NOI18N
         btn_exit.setText("EXIT");
@@ -79,49 +64,28 @@ public class Login extends javax.swing.JFrame {
                 btn_exitActionPerformed(evt);
             }
         });
-        getContentPane().add(btn_exit, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 170, 121, 50));
-
-        jLabel2.setFont(new java.awt.Font("Tekton Pro Ext", 1, 12)); // NOI18N
-        jLabel2.setText("Klik untuk daftar");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 220, 130, 20));
+        getContentPane().add(btn_exit, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 180, 121, 50));
 
         jLabel3.setFont(new java.awt.Font("Tekton Pro Ext", 1, 24)); // NOI18N
         jLabel3.setText("LOGIN");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 10, -1, -1));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 10, -1, -1));
 
         jLabel4.setFont(new java.awt.Font("Tekton Pro Ext", 1, 24)); // NOI18N
-        jLabel4.setText("Nama");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 100, -1, -1));
+        jLabel4.setText("Password");
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 100, -1, -1));
 
-        text_nama.addActionListener(new java.awt.event.ActionListener() {
+        btn_login.setFont(new java.awt.Font("Sylfaen", 1, 18)); // NOI18N
+        btn_login.setText("LOGIN");
+        btn_login.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                text_namaActionPerformed(evt);
+                btn_loginActionPerformed(evt);
             }
         });
-        getContentPane().add(text_nama, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 110, 190, 40));
+        getContentPane().add(btn_login, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 121, 50));
+        getContentPane().add(pass, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 120, 190, 40));
 
-        setBounds(0, 0, 439, 292);
+        setBounds(0, 0, 319, 292);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btn_loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_loginActionPerformed
-    String user = text_id.getText();
-    String pass = text_nama.getText();
-    
-     try{
-                try(Statement statement=(Statement)file_koneksi.GetConnection().createStatement()){
-                    statement.executeUpdate("INSERT INTO tb_akun(username, password)VALUES ('"+user+"','"+pass+"');") ;
-                }JOptionPane.showMessageDialog(null,"Selamat! anda berhasil sign Up!");
-            }catch(Exception t){
-                JOptionPane.showMessageDialog(null,"Mohon maaf, ulangi lagi prosedur");
-            }
-    
-
-// TODO add your handling code here:
-    }//GEN-LAST:event_btn_loginActionPerformed
-
-    private void btn_daftarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_daftarActionPerformed
-    new pesan_tiket().setVisible(true);        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_daftarActionPerformed
 
     private void btn_exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_exitActionPerformed
     dispose();        // TODO add your handling code here:
@@ -131,9 +95,28 @@ public class Login extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_text_idActionPerformed
 
-    private void text_namaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_text_namaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_text_namaActionPerformed
+    private void btn_loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_loginActionPerformed
+    Connection connection;
+        PreparedStatement ps;
+        try{
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/db_kereta?zeroDateTimeBehavior=convertToNull","root","");
+            ps = connection.prepareStatement("SELECT `username`,`password` FROM `tb_admin` WHERE `username` = ? AND `password` = ?");
+            ps.setString(1,text_id.getText());
+            ps.setString(2,pass.getText());
+            ResultSet result = ps.executeQuery();
+            if(result.next()){
+                new tabel_Penumpang().show();
+                this.dispose();
+            }
+            else{
+                JOptionPane.showMessageDialog(rootPane,"Salah!");
+                pass.setText("");
+                text_id.requestFocus();
+            }
+        }catch(SQLException ex){
+            JOptionPane.showMessageDialog(rootPane, "gagal");
+        }            // TODO add your handling code here:
+    }//GEN-LAST:event_btn_loginActionPerformed
 
     /**
      * @param args the command line arguments
@@ -171,14 +154,12 @@ public class Login extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btn_daftar;
     private javax.swing.JButton btn_exit;
     private javax.swing.JButton btn_login;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JPasswordField pass;
     private javax.swing.JTextField text_id;
-    private javax.swing.JTextField text_nama;
     // End of variables declaration//GEN-END:variables
 }
