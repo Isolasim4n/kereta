@@ -226,11 +226,11 @@ public class tabel_Penumpang extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(lokasiawal, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -296,6 +296,11 @@ public class tabel_Penumpang extends javax.swing.JFrame {
 
         btn_delete.setFont(new java.awt.Font("Sylfaen", 1, 18)); // NOI18N
         btn_delete.setText("DELETE");
+        btn_delete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_deleteActionPerformed(evt);
+            }
+        });
 
         btn_print.setFont(new java.awt.Font("Sylfaen", 1, 18)); // NOI18N
         btn_print.setText("PRINT");
@@ -334,13 +339,13 @@ public class tabel_Penumpang extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(37, 37, 37)
                 .addComponent(btn_edit, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(59, 59, 59)
                 .addComponent(btn_refresh, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
-                .addGap(151, 151, 151)
+                .addGap(57, 57, 57)
                 .addComponent(btn_delete, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
+                .addGap(51, 51, 51)
                 .addComponent(btn_print, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(37, 37, 37)
+                .addGap(69, 69, 69)
                 .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(23, 23, 23))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -479,6 +484,23 @@ public class tabel_Penumpang extends javax.swing.JFrame {
     
 // TODO add your handling code here:
     }//GEN-LAST:event_btn_clearActionPerformed
+
+    private void btn_deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_deleteActionPerformed
+    int baris = jTable1.getSelectedRow();
+        if (baris != -1){
+            String no_id = jTable1.getValueAt(baris, 0).toString();
+            String SQL = "DELETE FROM tb_penumpang WHERE id='"+no_id+"'";
+            int status = KoneksiDB.execute(SQL);
+                if(status==1){
+                    JOptionPane.showMessageDialog(this, "Data berhasil dihapus", "Sukses", JOptionPane.INFORMATION_MESSAGE);
+                }else{
+                    JOptionPane.showMessageDialog(this, "Data gagal dihapus", "Gagal", JOptionPane.WARNING_MESSAGE);
+                
+            }
+        }else{
+            JOptionPane.showMessageDialog(this, "Pilih baris data terlebih dahulu","Error", JOptionPane.WARNING_MESSAGE);
+        }    // TODO add your handling code here:
+    }//GEN-LAST:event_btn_deleteActionPerformed
 
     /**
      * @param args the command line arguments
