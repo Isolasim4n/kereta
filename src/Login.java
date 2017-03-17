@@ -1,3 +1,7 @@
+
+import java.sql.Statement;
+import javax.swing.JOptionPane;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -34,7 +38,7 @@ public class Login extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        text_id1 = new javax.swing.JTextField();
+        text_nama = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -89,22 +93,34 @@ public class Login extends javax.swing.JFrame {
         jLabel4.setText("Nama");
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 100, -1, -1));
 
-        text_id1.addActionListener(new java.awt.event.ActionListener() {
+        text_nama.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                text_id1ActionPerformed(evt);
+                text_namaActionPerformed(evt);
             }
         });
-        getContentPane().add(text_id1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 110, 190, 40));
+        getContentPane().add(text_nama, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 110, 190, 40));
 
         setBounds(0, 0, 439, 292);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_loginActionPerformed
-        // TODO add your handling code here:
+    String user = text_id.getText();
+    String pass = text_nama.getText();
+    
+     try{
+                try(Statement statement=(Statement)file_koneksi.GetConnection().createStatement()){
+                    statement.executeUpdate("INSERT INTO tb_akun(username, password)VALUES ('"+user+"','"+pass+"');") ;
+                }JOptionPane.showMessageDialog(null,"Selamat! anda berhasil sign Up!");
+            }catch(Exception t){
+                JOptionPane.showMessageDialog(null,"Mohon maaf, ulangi lagi prosedur");
+            }
+    
+
+// TODO add your handling code here:
     }//GEN-LAST:event_btn_loginActionPerformed
 
     private void btn_daftarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_daftarActionPerformed
-        // TODO add your handling code here:
+    new pesan_tiket().setVisible(true);        // TODO add your handling code here:
     }//GEN-LAST:event_btn_daftarActionPerformed
 
     private void btn_exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_exitActionPerformed
@@ -115,9 +131,9 @@ public class Login extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_text_idActionPerformed
 
-    private void text_id1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_text_id1ActionPerformed
+    private void text_namaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_text_namaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_text_id1ActionPerformed
+    }//GEN-LAST:event_text_namaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -163,6 +179,6 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JTextField text_id;
-    private javax.swing.JTextField text_id1;
+    private javax.swing.JTextField text_nama;
     // End of variables declaration//GEN-END:variables
 }
