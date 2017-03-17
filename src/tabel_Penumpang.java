@@ -434,7 +434,8 @@ public class tabel_Penumpang extends javax.swing.JFrame {
     }//GEN-LAST:event_namaActionPerformed
 
     private void btn_SaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_SaveActionPerformed
-    
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    String tanggal = dateFormat.format(jDateChooser1.getDate());
     String harga = "";
     String JK = "";
             if(rEkonomi.isSelected()){
@@ -460,12 +461,12 @@ public class tabel_Penumpang extends javax.swing.JFrame {
        
         
         String SQL = "INSERT INTO tb_penumpang "
-                + "(id`,`nama`,`stasiun_awal`,`stasiun_tujuan`,`tanggal`,`jenis_kereta`,`waktu_berangkat`,`tempat_duduk`,`harga`)"
+                + "(`id`,`nama`,`stasiun_awal`,`stasiun_tujuan`,`tanggal`,`jenis_kereta`,`waktu_berangkat`,`tempat_duduk`,`harga`)"
                 + "VALUES('"+id.getText()+"','"
                 +nama.getText()+"','"
                 +lokasiawal.getSelectedItem()+"','"
                 +LokasiTujuan.getSelectedItem()+"','"
-                +"05-03-2017"+"','"
+                +tanggal+"','"
                 +JK+"','"
                 +waktuberangkat.getSelectedItem()+"','"
                 +tempatduduk.getSelectedItem()+"','"
