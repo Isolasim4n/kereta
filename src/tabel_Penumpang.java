@@ -1,10 +1,13 @@
 
+import com.sun.corba.se.impl.protocol.giopmsgheaders.Message;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 /*
@@ -172,7 +175,7 @@ public class tabel_Penumpang extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(320, 320, 320)
                         .addComponent(jLabel4)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(362, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -323,6 +326,11 @@ public class tabel_Penumpang extends javax.swing.JFrame {
 
         btn_edit.setFont(new java.awt.Font("Sylfaen", 1, 18)); // NOI18N
         btn_edit.setText("EDIT");
+        btn_edit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_editActionPerformed(evt);
+            }
+        });
 
         btn_refresh.setFont(new java.awt.Font("Sylfaen", 1, 18)); // NOI18N
         btn_refresh.setText("REFRESH");
@@ -340,7 +348,7 @@ public class tabel_Penumpang extends javax.swing.JFrame {
                 .addGap(37, 37, 37)
                 .addComponent(btn_edit, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(59, 59, 59)
-                .addComponent(btn_refresh, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
+                .addComponent(btn_refresh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(57, 57, 57)
                 .addComponent(btn_delete, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(51, 51, 51)
@@ -383,11 +391,11 @@ public class tabel_Penumpang extends javax.swing.JFrame {
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addContainerGap(26, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(24, 24, 24))
+                .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -401,7 +409,7 @@ public class tabel_Penumpang extends javax.swing.JFrame {
 
         getContentPane().add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 930, 770));
 
-        pack();
+        setBounds(0, 0, 948, 641);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -409,6 +417,14 @@ public class tabel_Penumpang extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void btn_printActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_printActionPerformed
+        MessageFormat header = new MessageFormat("Data Penumpang Stasiun saya");
+        MessageFormat footer = new MessageFormat("Copyright @Prasetya");
+        
+        try{
+            jTable1.print(JTable.PrintMode.FIT_WIDTH,header,footer,true,null,true,null);   
+        } catch(java.awt.print.PrinterException e){
+            System.err.format("Cannot print %s%n", e.getMessage());
+        }
         // TODO add your handling code here:
     }//GEN-LAST:event_btn_printActionPerformed
 
@@ -502,6 +518,54 @@ public class tabel_Penumpang extends javax.swing.JFrame {
         }    // TODO add your handling code here:
     }//GEN-LAST:event_btn_deleteActionPerformed
 
+    private void btn_editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_editActionPerformed
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    String tanggal = dateFormat.format(jDateChooser1.getDate());
+    String harga = "";
+    String JK = "";
+            if(rEkonomi.isSelected()){
+                JK = "Ekonomi";
+                harga = "Rp.50000";
+            }else if(rEksekutif.isSelected()){
+                JK = "Eksekutif";
+                harga = "Rp.100.000";
+            }else{
+                JK = "Bisnis";
+                harga = "Rp.75.000";
+            }    
+         if("".equals(id.getText()) || 
+            "".equals(nama.getText()) || 
+                  "--- Pilih Lokasi Awal ---".equals(lokasiawal.getSelectedItem()) || 
+                  "--- Pilih Lokasi Tujan ---".equals(LokasiTujuan.getSelectedItem()) ||
+                  "----- Pilih Waktu Berangkat -----".equals(waktuberangkat.getSelectedItem()) ||
+                  "----- Pilih tempat duduk anda -----".equals(tempatduduk.getSelectedItem())||
+                 JK.equals(""))
+            {
+    JOptionPane.showMessageDialog(this, "Harap Lengkapi Data", "Error", JOptionPane.WARNING_MESSAGE);
+    }else {
+       
+        
+        String SQL = "UPDATE `tb_penumpang` SET "
+                +"WHERE id='"+id.getText()+"','"
+                +"WHERE nama='"+nama.getText()+"','"
+                +"WHERE stasiun_awal='"+lokasiawal.getSelectedItem()+"','"
+                +"WHERE stasiun_tujuan='"+LokasiTujuan.getSelectedItem()+"','"
+                +"WHERE tanggal='"+tanggal+"','"
+                +"WHERE jenis_kereta='"+JK+"','"
+                +"WHERE waktu_berangkat='"+waktuberangkat.getSelectedItem()+"','"
+                +"WHERE tempat_duduk='"+tempatduduk.getSelectedItem()+"','"
+                +"WHERE harga='"+harga+"')";  
+        
+       int status = KoneksiDB.execute(SQL);
+       if(status==0){
+           JOptionPane.showMessageDialog(this,"Data berhasil diupdate","Sukses",JOptionPane.INFORMATION_MESSAGE);
+           selectData();
+       }else {
+           JOptionPane.showMessageDialog(this,"Data gagal diupdate","Sukses",JOptionPane.WARNING_MESSAGE);
+        }
+// TODO add your handling code here:
+    }//GEN-LAST:event_btn_editActionPerformed
+    }
     /**
      * @param args the command line arguments
      */
